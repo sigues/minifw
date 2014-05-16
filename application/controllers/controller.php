@@ -12,14 +12,14 @@ class controller extends core_controller{
 		var_dump($this);
 		echo "</pre>";
 
-		/*echo "<pre>";
-		var_dump($this->model->getRowsByPerfil(1));
-		echo "</pre>";*/
+		echo "<pre>";
+		var_dump($this->model->getRowById(1));
+		echo "</pre>";
 		$this->otherController = new otherController();
 		echo "<pre>";
-		var_dump($this->otherController);
+		//var_dump($this->otherController);
 		echo "</pre>";
-/*		echo "<br><br>";
+		echo "<br><br>";
 		echo "<pre>";
 		$this->otherController->index();
 		echo "</pre>";
@@ -30,7 +30,17 @@ class controller extends core_controller{
 
 		echo "<pre>";
 		var_dump($this->otherController->model->getRowsByDieta_iddieta("1"));
-		echo "</pre>";*/
+		echo "</pre>";
+
+		echo "<pre>";
+		$this->otherController->index();
+		echo "</pre>";
+
+		echo "<pre>";
+		var_dump($this->otherController->model->getRowsByDieta_iddieta("1"));
+		echo "</pre>";
+		
+		$this->load->view("controller");
 
 	}
 }

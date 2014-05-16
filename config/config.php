@@ -8,3 +8,5 @@ $db_config = array(
 	);
 
 $class_config = array("Database");
+
+$default_controller = "controller";

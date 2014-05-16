@@ -1,10 +1,16 @@
 <?php
 include_once("core/controllers/core_controller.php");
+include("config/config.php");
 
 $requestURI = explode('/', $_SERVER['REQUEST_URI']);
-//var_dump($requestURI);
-$uriController = $requestURI[3];
-$uriAction = (isset($requestURI[4])) ? $requestURI[4] : "index" ;
+
+if(!isset($requestURI[3]) || $requestURI[3] == ""){
+	$uriController = $default_controller;
+	$uriAction = "index";
+}else{
+	$uriController = $requestURI[3];
+	$uriAction = (isset($requestURI[4])) ? $requestURI[4] : "index" ;
+}
 
 if(file_exists("application/controllers/".$uriController.".php")){
 	include_once("application/controllers/".$uriController.".php");
