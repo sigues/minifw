@@ -1,6 +1,8 @@
-Mini intento de fw
+# Mini intento de fw
 
 ====================================
+
+## Intro
 
 Debes tener activado mod_rewrite
 
@@ -24,11 +26,25 @@ class controller extends core_controller{
 
 Donde tendrás disponibles funciones que son generadas automáticamente
 
+====================================
 
+## Routing
 
-Funciones del modelo
+Se debe tener activado **mod_rewrite**
+
+El ruteo se hace automáticamente tomando como el primer parámetro el *controller* y como segundo el *method*
+
+*Ejemplo*
+```
+appurl/index.php/controller/method
+```
+
+El ejemplo ejecutará el controlador guardado en *application/controllers/controller.php* y ejecutará el método *method()*
+
 
 =====================================
+
+## Funciones del modelo
 
 Función Get
 
