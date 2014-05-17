@@ -1,6 +1,7 @@
 <?php
 
 class Database{
+	private $_query;
 	
 	public function __construct(){
 		include("config/config.php");
@@ -15,26 +16,26 @@ class Database{
 
 	public function __call($name,$args){
 		echo "autogenerando funci&oacute;n <b>".$name."</b><br><br>";
-		$pieces = preg_split('/(?=[A-Z])/',$name);
+		$uriPieces = preg_split('/(?=[A-Z])/',$name);
 		$res = "";
 		
-		if($pieces[0] == "get"){
-			if($pieces[1] == "Row"){
+		if($uriPieces[0] == "get"){
+			if($uriPieces[1] == "Row"){
 				$limit = 1;
-			} else if($pieces[1] == "Rows"){
+			} else if($uriPieces[1] == "Rows"){
 				$limit = 0;
 			}
 
-			if($pieces[(sizeof($pieces)-1)] == "Id"){
+			if($uriPieces[(sizeof($uriPieces)-1)] == "Id"){
 				$field = $this->_id;
-			}elseif($pieces[(sizeof($pieces)-1)] == "Array"){
+			}elseif($uriPieces[(sizeof($uriPieces)-1)] == "Array"){
 				$field = array();
 				foreach($args[0] as $k=>$arg){
 					$field[$k]=$arg;
 				}
 			}else{
 				$field = "";
-				foreach($pieces as $k=>$piece){
+				foreach($uriPieces as $k=>$piece){
 					if($k > 2){
 						if($k==3){
 							$field = strtolower($piece);
@@ -53,9 +54,19 @@ class Database{
 		if(is_array($arg)){
 			$query = "select * from ".$this->_table." where ";
 			foreach($arg as $k=>$v){
-				$query .= " $k = '$v' and";
+				if(is_array($v)){
+					if($this->validateEval($v[0])){
+						$query .= " $k ".$v[0]." '".$v[1]."' and";
+					}
+				}else{
+					$query .= " $k = '$v' and";		
+				}
 			}
 			$query = substr($query, 0, -3); 
+			if($limit>0){
+				$query .= " limit 0,".$limit;
+			}
+			echo $query."--".$limit;
 		}else{
 			$query = "select * from ".$this->_table." where ".$field." = '".$arg."'";
 			if($limit>0){
@@ -65,7 +76,7 @@ class Database{
 
 		$statement = $this->db->prepare($query);
 		$statement->execute();
-		$row = $statement->fetch();
+		$row = $statement->fetchAll();
 		return $row;
 	}
 
@@ -127,6 +138,15 @@ class Database{
 		$table_fields = $q->fetchAll(PDO::FETCH_COLUMN);
 		return $table_fields;
 		//$this->_d = $table_fields;
+	}
+
+	protected function validateEval($eval){
+		$validItems	=array("=","<=",">=","<>","!=","<",">");
+		if(in_array($eval, $validItems)){
+			return true;
+		} else{
+			return false;
+		}
 	}
 
 

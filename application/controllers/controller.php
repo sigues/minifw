@@ -12,22 +12,26 @@ class controller extends core_controller{
 		var_dump($this);
 		echo "</pre>";
 
-		echo "<pre>";
+		/*echo "<pre>";
 		var_dump($this->model->getRowById(1));
-		echo "</pre>";
+		echo "</pre>";*/
 		$this->otherController = new otherController();
 		echo "<pre>";
 		//var_dump($this->otherController);
 		echo "</pre>";
 		echo "<br><br>";
 		echo "<pre>";
-		$this->otherController->index();
+		var_dump($this->otherController->getArray());
+		echo "</pre>";
+		echo "<br><br>";
+		echo "<pre>";
+		var_dump($this->otherController->getArrayItem());
 		echo "</pre>";
 //		echo "estamos en el index de controller";
 		echo "<pre>";
 		var_dump($this->model->getRowsByContrasena("c893bad68927b457dbed39460e6afd62"));
 		echo "</pre>";
-
+/*
 		echo "<pre>";
 		var_dump($this->otherController->model->getRowsByDieta_iddieta("1"));
 		echo "</pre>";
@@ -38,7 +42,7 @@ class controller extends core_controller{
 
 		echo "<pre>";
 		var_dump($this->otherController->model->getRowsByDieta_iddieta("1"));
-		echo "</pre>";
+		echo "</pre>";*/
 		
 		$this->load->view("controller");
 
