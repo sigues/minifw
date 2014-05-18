@@ -10,17 +10,17 @@ class controller extends core_controller{
 	public function index(){
 		echo "<pre>";
 		var_dump($this);
-		var_dump($this->model->getMethods());
+//		var_dump($this->model->getMethods());
 		echo "</pre>";
-		/*echo "<pre>";
-		var_dump($this->model->getRowById(1));
-		echo "</pre>";*/
+		echo "<pre>";
+//		var_dump($this->model->getRowById(1));
+		echo "</pre>";
 //		$this->otherController = new otherController();
 //		echo "<pre>";
 		//var_dump($this->otherController);
 //		echo "</pre>";
 		echo "<br><br>";
-		$this->load->view("controller");
+		$this->load->view("bootstrap");
 
 	}
 }

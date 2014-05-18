@@ -7,6 +7,6 @@ $db_config = array(
 	"mysql_db" => "nutricion"
 	);
 
-$class_config = array("Database");
+$class_config = array("Database","Bootstrap","Uri");
 
 $default_controller = "controller";

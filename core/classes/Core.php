@@ -14,7 +14,7 @@ class Core {
 				$this->$class = new $class();
 			} elseif (file_exists("core/classes/".$class.".php")){
 				require_once("core/classes/".$class.".php");
-				//$this->$class = new $class();
+				$this->$class = new $class();
 			} else {
 				echo $this->_t("Se intent&oacute; cargar una clase inexistente. ".$class);
 			}

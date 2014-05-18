@@ -6,7 +6,9 @@ class Database{
 	
 	public function __construct(){
 		include("config/config.php");
-		$this->db = new PDO('mysql:host='.$db_config["mysql_host"].';dbname='.$db_config["mysql_db"], $db_config["mysql_user"], $db_config["mysql_pass"]);
+		$this->db = new PDO('mysql:host='.$db_config["mysql_host"].';dbname='.$db_config["mysql_db"], $db_config["mysql_user"], $db_config["mysql_pass"], array(
+							    PDO::ATTR_PERSISTENT => true
+							));
 	}
 
 	public function __destruct(){
