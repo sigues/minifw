@@ -2,12 +2,11 @@
 
 class Database{
 	private $_query;
+	private $_fields;
 	
 	public function __construct(){
 		include("config/config.php");
-		$this->db = new PDO('mysql:host='.$db_config["mysql_host"].';dbname='.$db_config["mysql_db"], $db_config["mysql_user"], $db_config["mysql_pass"], array(
-							    PDO::ATTR_PERSISTENT => true
-							));
+		$this->db = new PDO('mysql:host='.$db_config["mysql_host"].';dbname='.$db_config["mysql_db"], $db_config["mysql_user"], $db_config["mysql_pass"]);
 	}
 
 	public function __destruct(){
@@ -80,64 +79,13 @@ class Database{
 		return $row;
 	}
 
-	protected function _getItemById($id){
-		$select_values = array(':table' => $this->_table,
-									':fid' => $this->_id,
-									':id' => $id);
-
-		$query = "select * from ".$this->_table." where ".$this->_id." = ".$id;
-
-		$statement = $this->db->prepare($query);
-		$statement->execute();
-		$row = $statement->fetch();
-		return $row;
-	}
-
-	protected function _getItemsById($id){
-		$select_values = array(':table' => $this->_table,
-									':fid' => $this->_id,
-									':id' => $id);
-
-		$query = "select * from ".$this->_table." where ".$this->_id." = ".$id;
-
-		$statement = $this->db->prepare($query);
-		$statement->execute();
-		$row = $statement->fetchAll();
-		return $row;
-	}
-
-	protected function _getItemByField($value,$field){
-		$select_values = array(':table' => $this->_table,
-									':field' => $field,
-									':value' => $value);
-
-		$query = "select * from ".$this->_table." where ".$field." = '".$value."'";
-//echo $query;
-		$statement = $this->db->prepare($query);
-		$statement->execute();
-		$row = $statement->fetch();
-		return $row;
-	}
-
-	protected function _getItemsByField($value,$field){
-		$select_values = array(':table' => $this->_table,
-									':field' => $field,
-									':value' => $value);
-
-		$query = "select * from ".$this->_table." where ".$field." = '".$value."'";
-
-		$statement = $this->db->prepare($query);
-		$statement->execute();
-		$row = $statement->fetchAll();
-		return $row;
-	}
-
 	public function describeTable(){
-		$q = $this->db->prepare("DESCRIBE ".$this->_table);
+		$q = $this->db->prepare("SHOW COLUMNS FROM ".$this->_table);
 		$q->execute();
-		$table_fields = $q->fetchAll(PDO::FETCH_COLUMN);
-		return $table_fields;
-		//$this->_d = $table_fields;
+		while($row = $q->fetch(PDO::FETCH_ASSOC)){
+			$this->_fields[] = $row;
+		}
+		return $this->_fields;
 	}
 
 	protected function validateEval($eval){
@@ -148,7 +96,5 @@ class Database{
 			return false;
 		}
 	}
-
-
 
 }

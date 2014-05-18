@@ -34,12 +34,42 @@ Se debe tener activado **mod_rewrite**
 
 El ruteo se hace automáticamente tomando como el primer parámetro el *controller* y como segundo el *method*
 
-*Ejemplo*
+**Ejemplo**
 ```
 appurl/index.php/controller/method
 ```
 
 El ejemplo ejecutará el controlador guardado en *application/controllers/controller.php* y ejecutará el método *method()*
+
+Los parámetros que se envien después del *method* se tomarán como parámetros y están disponibles en:
+
+```
+$this->uri;
+
+//ejemplo
+//url: minifw/index.php/controller/index/usuario/valor/
+
+var_dump($this->uri);
+
+/*
+
+array(5) {
+  [0]=>
+  string(9) "index.php"
+  [1]=>
+  string(10) "controller"
+  [2]=>
+  string(5) "index"
+  [3]=>
+  string(7) "usuario"
+  [4]=>
+  string(5) "valor"
+}
+
+*/
+
+
+```
 
 
 =====================================
